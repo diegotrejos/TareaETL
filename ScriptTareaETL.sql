@@ -92,13 +92,26 @@ VALUES(0, 0, 0, 0, 0);
 
 --SELECT PRUEBAS
 use BaseETLTarea2;
-SELECT * FROM dbo.Date;
 SELECT * FROM Product;
-SELECT * FROM Territory;
 SELECT * FROM Employee;
+SELECT * FROM dbo.Date;
+SELECT * FROM Territory;
 SELECT * FROM FactSalesPerfomance;
 
--- Haciendo consultas a AdventureWorksElka
-use AdventureWorks_Elka;
+-- Borando manualmente
+use BaseETLTarea2;
+delete from dbo.Date;
+delete from dbo.Product;
+delete from dbo.FactSalesPerfomance;
+delete from dbo.Territory;
+delete from dbo.Employee;
+
+-- Haciendo consultas a AdventureWorks
+use AdventureWorks2017;
+select * from Sales.SalesOrderHeader;
 
 select * from Production.Product;
+
+-- Consultando la fact table
+use BaseETLTarea2;
+select * from FactSalesPerfomance;
