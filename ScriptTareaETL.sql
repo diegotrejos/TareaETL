@@ -75,34 +75,30 @@ CREATE TABLE FactSalesPerfomance
 
 
 INSERT INTO Employee(EmployeeKey, NationalIDNumber)
-VALUES(0, '901090640')
+VALUES(0, '901090640');
 
-INSERT INTO Date
-VALUES
+INSERT INTO [Date]
+VALUES (0, '2020-05-05', 'monday', 1, 1, 'spring', 'spring', 'may', 1, 2020, 1);
 
 INSERT INTO Product(ProductKey, Name, Color)
-VALUES(0, 'Coca', 'rojo')
+VALUES(0, 'Coca', 'rojo');
 
 INSERT INTO Territory(TerritoryKey, ProvinceStateName, ContryName)
-VALUES(0, 'Alajuela', 'CR')
+VALUES(0, 'Alajuela', 'CR');
 
-INSERT INTO FactSalesPerfomance(FactSalesPerformanceKey, Employee_FKey, Territory_FKey, Date_FKey, Product_FKey)
-VALUES(0, 0, 0, 0, 0)
+INSERT INTO FactSalesPerfomance(FactSalesPerfomanceKey, Employee_FKey, Territory_FKey, Date_FKey, Product_FKey)
+VALUES(0, 0, 0, 0, 0);
 
 
 --SELECT PRUEBAS
+use BaseETLTarea2;
+SELECT * FROM dbo.Date;
+SELECT * FROM Product;
+SELECT * FROM Territory;
+SELECT * FROM Employee;
+SELECT * FROM FactSalesPerfomance;
 
-SELECT *
-FROM Date
+-- Haciendo consultas a AdventureWorksElka
+use AdventureWorks_Elka;
 
-SELECT *
-FROM Product
-
-SELECT *
-FROM Territory
-
-SELECT *
-FROM Employee
-
-SELECT *
-FROM FactSalesPerfomance
+select * from Production.Product;

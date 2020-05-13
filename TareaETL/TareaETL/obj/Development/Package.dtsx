@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="5"
-  DTS:VersionGUID="{0BA68D46-4846-4574-8269-028E15E0926E}">
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{026A9B18-5751-4784-92BC-5E7F3B40B277}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -30,13 +30,13 @@
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\Purge DB ETL"
+      DTS:refId="Package\Execute SQL Task"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{B11C434A-1214-4252-89F0-9B0D116F85EC}"
+      DTS:Description="Purge BaseETLTarea2"
+      DTS:DTSID="{FD79D8F1-F559-4C35-BCF4-9D207EF6AC02}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Purge DB ETL"
+      DTS:ObjectName="Execute SQL Task"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -59,9 +59,9 @@
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="144,42"
-          Id="Package\Purge DB ETL"
-          TopLeft="150.9375,72.8125" />
+          Size="162.4,41.6"
+          Id="Package\Execute SQL Task"
+          TopLeft="84.5714300116714,40.9882358689622" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
