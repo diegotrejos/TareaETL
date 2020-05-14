@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="64"
-  DTS:VersionGUID="{B935A291-BE1F-4136-BFAA-134E6BE82B71}">
+  DTS:VersionBuild="71"
+  DTS:VersionGUID="{4A1C376E-E9A0-4744-BB0A-173AAD759668}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1476,6 +1476,83 @@
               </outputs>
             </component>
             <component
+              refId="Package\FactSalesPerformance\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\FactSalesPerformance\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\Data Conversion.Inputs[Data Conversion Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\FactSalesPerformance\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of OrderDate]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of OrderDate]"
+                      name="Copy of OrderDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\FactSalesPerformance\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\FactSalesPerformance\Derived Column"
               componentClassID="Microsoft.DerivedColumn"
               contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
@@ -1555,185 +1632,6 @@
                       refId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\FactSalesPerformance\FactTable"
-              componentClassID="Microsoft.OLEDBDestination"
-              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
-              description="OLE DB Destination"
-              name="FactTable"
-              usesDispositions="true"
-              version="4">
-              <properties>
-                <property
-                  dataType="System.Int32"
-                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
-                  name="CommandTimeout">0</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[FactSalesPerfomance]</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the variable that contains the name of the database object used to open a rowset."
-                  name="OpenRowsetVariable"></property>
-                <property
-                  dataType="System.String"
-                  description="The SQL command to be executed."
-                  name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the column code page to use when code page information is unavailable from the data source."
-                  name="DefaultCodePage">1252</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Forces the use of the DefaultCodePage property value when describing character data."
-                  name="AlwaysUseDefaultCodePage">false</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the mode used to access the database."
-                  name="AccessMode"
-                  typeConverter="AccessMode">3</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepIdentity">false</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                  name="FastLoadMaxInsertCommitSize">2147483647</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\FactSalesPerformance\FactTable.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
-                  connectionManagerRefId="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
-                  description="The OLE DB runtime connection used to access the database."
-                  name="OleDbConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input]"
-                  errorOrTruncationOperation="Insert"
-                  errorRowDisposition="FailComponent"
-                  hasSideEffects="true"
-                  name="OLE DB Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[OrderQty]"
-                      cachedDataType="i2"
-                      cachedName="OrderQty"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[OrderQty]" />
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[UnitPrice]"
-                      cachedDataType="cy"
-                      cachedName="UnitPrice"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[UnitPrice]" />
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[totalAmount]"
-                      cachedDataType="numeric"
-                      cachedName="totalAmount"
-                      cachedPrecision="25"
-                      cachedScale="4"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
-                      lineageId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Output].Columns[totalAmount]" />
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[SalesPersonID]"
-                      cachedDataType="i4"
-                      cachedName="SalesPersonID"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Employee_FKey]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[SalesPersonID]" />
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[TerritoryID]"
-                      cachedDataType="i4"
-                      cachedName="TerritoryID"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Territory_FKey]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]" />
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[ProductID]"
-                      cachedDataType="i4"
-                      cachedName="ProductID"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Product_FKey]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[ProductID]" />
-                    <inputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].Columns[OrderDate]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="OrderDate"
-                      externalMetadataColumnId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Date_FKey]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[FactSalesPerfomanceKey]"
-                      dataType="i4"
-                      name="FactSalesPerfomanceKey" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
-                      dataType="i4"
-                      name="Quantity" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
-                      dataType="i4"
-                      name="Price" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
-                      dataType="i4"
-                      name="Amount" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Employee_FKey]"
-                      dataType="i4"
-                      name="Employee_FKey" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Territory_FKey]"
-                      dataType="i4"
-                      name="Territory_FKey" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Date_FKey]"
-                      dataType="i4"
-                      name="Date_FKey" />
-                    <externalMetadataColumn
-                      refId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input].ExternalColumns[Product_FKey]"
-                      dataType="i4"
-                      name="Product_FKey" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\FactSalesPerformance\FactTable.Outputs[OLE DB Destination Error Output]"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\FactSalesPerformance\FactTable.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\FactSalesPerformance\FactTable.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\FactSalesPerformance\FactTable.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -2103,6 +2001,186 @@
                       refId="Package\FactSalesPerformance\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\FactSalesPerformance\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\FactSalesPerformance\OLE DB Destination 1"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination 1"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FactSalesPerfomance]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\FactSalesPerformance\OLE DB Destination 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  connectionManagerRefId="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Product_FKey]"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Territory_FKey]"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[SalesPersonID]"
+                      cachedDataType="i4"
+                      cachedName="SalesPersonID"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Employee_FKey]"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[SalesPersonID]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[totalAmount]"
+                      cachedDataType="numeric"
+                      cachedName="totalAmount"
+                      cachedPrecision="25"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
+                      lineageId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Output].Columns[totalAmount]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[UnitPrice]"
+                      cachedDataType="cy"
+                      cachedName="UnitPrice"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[UnitPrice]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[OrderQty]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Date_FKey]"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[OrderDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[FactSalesPerfomanceKey]"
+                      dataType="i4"
+                      name="FactSalesPerfomanceKey" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      dataType="i4"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                      dataType="i4"
+                      name="Price" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
+                      dataType="i4"
+                      name="Amount" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Employee_FKey]"
+                      dataType="i4"
+                      name="Employee_FKey" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Territory_FKey]"
+                      dataType="i4"
+                      name="Territory_FKey" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Date_FKey]"
+                      dataType="wstr"
+                      length="50"
+                      name="Date_FKey" />
+                    <externalMetadataColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Product_FKey]"
+                      dataType="i4"
+                      name="Product_FKey" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\FactSalesPerformance\OLE DB Destination 1.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -2874,8 +2952,13 @@
           </components>
           <paths>
             <path
+              refId="Package\FactSalesPerformance.Paths[Data Conversion Output]"
+              endId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\FactSalesPerformance\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
               refId="Package\FactSalesPerformance.Paths[Derived Column Output]"
-              endId="Package\FactSalesPerformance\FactTable.Inputs[OLE DB Destination Input]"
+              endId="Package\FactSalesPerformance\Data Conversion.Inputs[Data Conversion Input]"
               name="Derived Column Output"
               startId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Output]" />
             <path
@@ -14575,6 +14658,29 @@
                           name="FriendlyExpression">(MONTH(OrderDate) &gt; 11 &amp;&amp; MONTH(OrderDate) &lt;= 2) ? 1 : ((MONTH(OrderDate) &gt;= 3 &amp;&amp; MONTH(OrderDate) &lt; 6) ? 2 : ((MONTH(OrderDate) &gt;= 6 &amp;&amp; MONTH(OrderDate) &lt;= 8)) ? 3 : 4)</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[DateKeyC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[DateKeyC]"
+                      name="DateKeyC"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RIGHT]("0" + (DT_STR,2,1252)[DATEPART]("dd",(#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]})),2) + "-" + [RIGHT]("0" + (DT_STR,2,1252)[DATEPART]("mm",(#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]})),2) + "-" + (DT_STR,4,1252)[DATEPART]("yy",(#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RIGHT("0" + (DT_STR,2,1252)DATEPART("dd",(OrderDate)),2) + "-" + RIGHT("0" + (DT_STR,2,1252)DATEPART("mm",(OrderDate)),2) + "-" + (DT_STR,4,1252)DATEPART("yy",(OrderDate))</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -14700,12 +14806,6 @@
                       externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DayOfWeek]"
                       lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Day]" />
                     <inputColumn
-                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderDate]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="OrderDate"
-                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
-                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]" />
-                    <inputColumn
                       refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FiscaYear]"
                       cachedDataType="i4"
                       cachedName="FiscaYear"
@@ -14724,12 +14824,26 @@
                       cachedName="Season"
                       externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[season]"
                       lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Season]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DateKeyC]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DateKeyC"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[DateKeyC]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
                       refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
-                      dataType="i4"
+                      dataType="wstr"
+                      length="50"
                       name="DateKey" />
                     <externalMetadataColumn
                       refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
@@ -15274,17 +15388,17 @@
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,171.309730449992" />
+                    End="0,149.809730449992" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,171.309730449992"
-                    Point2="0,175.309730449992"
-                    Point3="4,175.309730449992" />
+                    Point1="0,149.809730449992"
+                    Point2="0,153.809730449992"
+                    Point3="4,153.809730449992" />
                   <mssgle:LineSegment
-                    End="148.292858656626,175.309730449992" />
+                    End="148.292858656626,153.809730449992" />
                   <mssgle:CubicBezierSegment
-                    Point1="148.292858656626,175.309730449992"
-                    Point2="152.292858656626,175.309730449992"
-                    Point3="152.292858656626,179.309730449992" />
+                    Point1="148.292858656626,153.809730449992"
+                    Point2="152.292858656626,153.809730449992"
+                    Point3="152.292858656626,157.809730449992" />
                   <mssgle:LineSegment
                     End="152.292858656626,211.879029239084" />
                 </mssgle:SegmentCollection>
@@ -15308,17 +15422,17 @@
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,65.3937449631173" />
+                    End="0,80.8937449631173" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,65.3937449631173"
-                    Point2="0,69.3937449631173"
-                    Point3="4,69.3937449631173" />
+                    Point1="0,80.8937449631173"
+                    Point2="0,84.8937449631173"
+                    Point3="4,84.8937449631173" />
                   <mssgle:LineSegment
-                    End="85.172449520224,69.3937449631173" />
+                    End="85.172449520224,84.8937449631173" />
                   <mssgle:CubicBezierSegment
-                    Point1="85.172449520224,69.3937449631173"
-                    Point2="89.172449520224,69.3937449631173"
-                    Point3="89.172449520224,73.3937449631173" />
+                    Point1="85.172449520224,84.8937449631173"
+                    Point2="89.172449520224,84.8937449631173"
+                    Point3="89.172449520224,88.8937449631173" />
                   <mssgle:LineSegment
                     End="89.172449520224,146.053014862055" />
                 </mssgle:SegmentCollection>
@@ -15342,17 +15456,17 @@
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,68.1805657737193" />
+                    End="0,81.6805657737193" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,68.1805657737193"
-                    Point2="0,72.1805657737193"
-                    Point3="-4,72.1805657737193" />
+                    Point1="0,81.6805657737193"
+                    Point2="0,85.6805657737193"
+                    Point3="-4,85.6805657737193" />
                   <mssgle:LineSegment
-                    End="-40.1690476190473,72.1805657737193" />
+                    End="-40.1690476190473,85.6805657737193" />
                   <mssgle:CubicBezierSegment
-                    Point1="-40.1690476190473,72.1805657737193"
-                    Point2="-44.1690476190473,72.1805657737193"
-                    Point3="-44.1690476190473,76.1805657737193" />
+                    Point1="-40.1690476190473,85.6805657737193"
+                    Point2="-44.1690476190473,85.6805657737193"
+                    Point3="-44.1690476190473,89.6805657737193" />
                   <mssgle:LineSegment
                     End="-44.1690476190473,147.47619047619" />
                 </mssgle:SegmentCollection>
@@ -17611,7 +17725,7 @@
     design-time-name="Package\Time">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Time\OLE DB Source"
@@ -17651,7 +17765,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="24.75,45,16,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
@@ -17941,23 +18057,49 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="124.5,42"
-          Id="Package\FactSalesPerformance\FactTable"
-          TopLeft="619.5,334" />
+          Size="156,42"
+          Id="Package\FactSalesPerformance\Data Conversion"
+          TopLeft="608,338" />
         <EdgeLayout
           Id="Package\FactSalesPerformance.Paths[Derived Column Output]"
-          TopLeft="684.625,291.5">
+          TopLeft="686.75,291.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,42.5"
+              EndConnector="0,46.5"
               Start="0,0"
-              End="0,35">
+              End="0,39">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35" />
+                    End="0,39" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="180,42"
+          Id="Package\FactSalesPerformance\OLE DB Destination 1"
+          TopLeft="597.5,442" />
+        <EdgeLayout
+          Id="Package\FactSalesPerformance.Paths[Data Conversion Output]"
+          TopLeft="686.75,380">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62"
+              Start="0,0"
+              End="0,54.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,54.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -18009,7 +18151,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\FactSalesPerformance\FactTable">
+    design-time-name="Package\FactSalesPerformance\OLE DB Destination 1">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
