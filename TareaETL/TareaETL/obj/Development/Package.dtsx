@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="53"
-  DTS:VersionGUID="{84D70653-4D1C-4DDA-B231-B5E211F1F55F}">
+  DTS:VersionBuild="62"
+  DTS:VersionGUID="{FAA877E9-5AEC-413D-8968-D7BFBDDF5268}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -554,6 +554,19 @@
                           name="InputColumnID">#{Package\Employee\Merge Join.Inputs[Merge Join Left Input].Columns[MaritalStatus]}</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\Employee\Merge Join.Outputs[Merge Join Output].Columns[BusinessEntityID (1)]"
+                      dataType="i4"
+                      lineageId="Package\Employee\Merge Join.Outputs[Merge Join Output].Columns[BusinessEntityID (1)]"
+                      name="BusinessEntityID (1)">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Employee\Merge Join.Inputs[Merge Join Right Input].Columns[BusinessEntityID]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -666,12 +679,12 @@
                       externalMetadataColumnId="Package\Employee\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Salaried]"
                       lineageId="Package\Employee\Merge Join.Outputs[Merge Join Output].Columns[SalariedFlag]" />
                     <inputColumn
-                      refId="Package\Employee\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NationalIDNumber]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="NationalIDNumber"
+                      refId="Package\Employee\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BusinessEntityID]"
+                      cachedDataType="i4"
+                      cachedName="BusinessEntityID"
+                      cachedSortKeyPosition="1"
                       externalMetadataColumnId="Package\Employee\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NationalIDNumber]"
-                      lineageId="Package\Employee\Merge Join.Outputs[Merge Join Output].Columns[NationalIDNumber]" />
+                      lineageId="Package\Employee\Merge Join.Outputs[Merge Join Output].Columns[BusinessEntityID]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -11308,6 +11321,13 @@
                       cachedName="NameCountry"
                       externalMetadataColumnId="Package\Territory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContryName]"
                       lineageId="Package\Territory\Merge Join.Outputs[Merge Join Output].Columns[NameCountry]" />
+                    <inputColumn
+                      refId="Package\Territory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TerritoryID (1)]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID (1)"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Territory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TerritoryID]"
+                      lineageId="Package\Territory\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID (1)]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -11325,6 +11345,10 @@
                       dataType="wstr"
                       length="50"
                       name="ContryName" />
+                    <externalMetadataColumn
+                      refId="Package\Territory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TerritoryID]"
+                      dataType="i4"
+                      name="TerritoryID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -12797,6 +12821,664 @@
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Time"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{73CCEA36-E53E-4FBD-9320-7BBCFF2165C5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Time"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Time\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Time\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Time\Derived Column.Inputs[Derived Column Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Time\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Time\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Day]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Day]"
+                      name="Day"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DAY(OrderDate)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Month]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Month]"
+                      name="Month"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">MONTH(OrderDate)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[YEAR](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">YEAR(OrderDate)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Quarter]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Quarter]"
+                      name="Quarter"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 1 &amp;&amp; [MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 3) ? 1 : (([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 4 &amp;&amp; [MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 6) ? 2 : (([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 7 &amp;&amp; [MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 9)) ? 3 : 4)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(MONTH(OrderDate) &gt;= 1 &amp;&amp; MONTH(OrderDate) &lt;= 3) ? 1 : ((MONTH(OrderDate) &gt;= 4 &amp;&amp; MONTH(OrderDate) &lt;= 6) ? 2 : ((MONTH(OrderDate) &gt;= 7 &amp;&amp; MONTH(OrderDate) &lt;= 9)) ? 3 : 4)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[FiscaYear]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[FiscaYear]"
+                      name="FiscaYear"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 10) ? [YEAR](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) + 1 : [YEAR](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(MONTH(OrderDate) &gt;= 10) ? YEAR(OrderDate) + 1 : YEAR(OrderDate)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Season]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="6"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Season]"
+                      name="Season"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 3 &amp;&amp; [DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 21) &amp;&amp; ([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 6 &amp;&amp; [DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 20)) ? "Spring" : ((([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 6 &amp;&amp; [DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 21) &amp;&amp; ([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 9 &amp;&amp; [DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 22)) ? "Summer" : ((([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 9 &amp;&amp; [DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 23) &amp;&amp; ([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 12 &amp;&amp; [DAY](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 20)) ? "Autumn" : "Winter"))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">((MONTH(OrderDate) &gt;= 3 &amp;&amp; DAY(OrderDate) &gt;= 21) &amp;&amp; (MONTH(OrderDate) &lt;= 6 &amp;&amp; DAY(OrderDate) &lt;= 20)) ? "Spring" : (((MONTH(OrderDate) &gt;= 6 &amp;&amp; DAY(OrderDate) &gt;= 21) &amp;&amp; (MONTH(OrderDate) &lt;= 9 &amp;&amp; DAY(OrderDate) &lt;= 22)) ? "Summer" : (((MONTH(OrderDate) &gt;= 9 &amp;&amp; DAY(OrderDate) &gt;= 23) &amp;&amp; (MONTH(OrderDate) &lt;= 12 &amp;&amp; DAY(OrderDate) &lt;= 20)) ? "Autumn" : "Winter"))</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[FiscalQuarter]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[FiscalQuarter]"
+                      name="FiscalQuarter"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt; 11 &amp;&amp; [MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 2) ? 1 : (([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 3 &amp;&amp; [MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt; 6) ? 2 : (([MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &gt;= 6 &amp;&amp; [MONTH](#{Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]}) &lt;= 8)) ? 3 : 4)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(MONTH(OrderDate) &gt; 11 &amp;&amp; MONTH(OrderDate) &lt;= 2) ? 1 : ((MONTH(OrderDate) &gt;= 3 &amp;&amp; MONTH(OrderDate) &lt; 6) ? 2 : ((MONTH(OrderDate) &gt;= 6 &amp;&amp; MONTH(OrderDate) &lt;= 8)) ? 3 : 4)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Time\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Time\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Time\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Time\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Date]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Time\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  connectionManagerRefId="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Month]"
+                      cachedDataType="i4"
+                      cachedName="Month"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Month]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Month]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quarter]"
+                      cachedDataType="i4"
+                      cachedName="Quarter"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quarter]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Quarter]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Day]"
+                      cachedDataType="i4"
+                      cachedName="Day"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DayOfWeek]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Day]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="OrderDate"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FiscaYear]"
+                      cachedDataType="i4"
+                      cachedName="FiscaYear"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FiscalYear]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[FiscaYear]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FiscalQuarter]"
+                      cachedDataType="i4"
+                      cachedName="FiscalQuarter"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FiscalQuarter]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[FiscalQuarter]" />
+                    <inputColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Season]"
+                      cachedDataType="wstr"
+                      cachedLength="6"
+                      cachedName="Season"
+                      externalMetadataColumnId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[season]"
+                      lineageId="Package\Time\Derived Column.Outputs[Derived Column Output].Columns[Season]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
+                      dataType="dbDate"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DayOfWeek]"
+                      dataType="i4"
+                      name="DayOfWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FiscalYear]"
+                      dataType="i4"
+                      name="FiscalYear" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FiscalQuarter]"
+                      dataType="i4"
+                      name="FiscalQuarter" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Month]"
+                      dataType="i4"
+                      name="Month" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quarter]"
+                      dataType="i4"
+                      name="Quarter" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[season]"
+                      dataType="wstr"
+                      length="10"
+                      name="season" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Time\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Time\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Time\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Time\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Time\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[SalesOrderHeader]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Time\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CI0141.AdventureWorks2017]"
+                  connectionManagerRefId="Package.ConnectionManagers[CI0141.AdventureWorks2017]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      dataType="i4"
+                      name="SalesOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RevisionNumber]"
+                      dataType="ui1"
+                      name="RevisionNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DueDate]"
+                      dataType="dbTimeStamp"
+                      name="DueDate" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      dataType="dbTimeStamp"
+                      name="ShipDate" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      dataType="ui1"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OnlineOrderFlag]"
+                      dataType="bool"
+                      name="OnlineOrderFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="SalesOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="PurchaseOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AccountNumber]"
+                      dataType="wstr"
+                      length="15"
+                      name="AccountNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesPersonID]"
+                      dataType="i4"
+                      name="SalesPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      dataType="i4"
+                      name="TerritoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[BillToAddressID]"
+                      dataType="i4"
+                      name="BillToAddressID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipToAddressID]"
+                      dataType="i4"
+                      name="ShipToAddressID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipMethodID]"
+                      dataType="i4"
+                      name="ShipMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CreditCardID]"
+                      dataType="i4"
+                      name="CreditCardID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CreditCardApprovalCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="CreditCardApprovalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrencyRateID]"
+                      dataType="i4"
+                      name="CurrencyRateID" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SubTotal]"
+                      dataType="cy"
+                      name="SubTotal" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TaxAmt]"
+                      dataType="cy"
+                      name="TaxAmt" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Freight]"
+                      dataType="cy"
+                      name="Freight" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TotalDue]"
+                      dataType="cy"
+                      name="TotalDue" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Comment]"
+                      dataType="wstr"
+                      length="128"
+                      name="Comment" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[rowguid]"
+                      dataType="guid"
+                      name="rowguid" />
+                    <externalMetadataColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\Time\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      name="SalesOrderID" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Time.Paths[Derived Column Output]"
+              endId="Package\Time\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Time\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Time.Paths[OLE DB Source Output]"
+              endId="Package\Time\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Time\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -12823,6 +13505,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Employee" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{268E19B5-62F4-45E5-BF9C-D70D9774F4D0}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Time" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -12835,11 +13525,11 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="125,42.5"
           Id="Package\Employee"
-          TopLeft="108.357141343374,121.704304094249" />
+          TopLeft="57.107141343374,29.6209707609156" />
         <NodeLayout
           Size="162.5,42.5"
           Id="Package\Execute SQL Task"
@@ -12847,37 +13537,37 @@
         <NodeLayout
           Size="115,42.5"
           Id="Package\Product"
-          TopLeft="281.377550479776,174.196985137945" />
+          TopLeft="160.127550479776,95.446985137945" />
         <NodeLayout
           Size="119.5,42.5"
           Id="Package\Territory"
-          TopLeft="430.285714285714,119.857142857143" />
+          TopLeft="326.119047619047,94.0238095238097" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="318.218257147438,68.4361815805038">
+          TopLeft="343.968257147438,68.4361815805038">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="171.817457138276,51.4209612766391"
+              EndConnector="41.9007904716093,25.5876279433059"
               Start="0,0"
-              End="171.817457138276,43.9209612766391">
+              End="41.9007904716093,18.0876279433059">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.7104806383195" />
+                    End="0,6.38474113969635" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,21.7104806383195"
-                    Point2="0,25.7104806383195"
-                    Point3="4,25.7104806383195" />
+                    Point1="0,6.38474113969635"
+                    Point2="0,10.3847411396963"
+                    Point3="4,10.3847411396963" />
                   <mssgle:LineSegment
-                    End="167.817457138276,25.7104806383195" />
+                    End="37.9007904716093,10.3847411396963" />
                   <mssgle:CubicBezierSegment
-                    Point1="167.817457138276,25.7104806383195"
-                    Point2="171.817457138276,25.7104806383195"
-                    Point3="171.817457138276,29.7104806383195" />
+                    Point1="37.9007904716093,10.3847411396963"
+                    Point2="41.9007904716093,10.3847411396963"
+                    Point3="41.9007904716093,14.3847411396963" />
                   <mssgle:LineSegment
-                    End="171.817457138276,43.9209612766391" />
+                    End="41.9007904716093,18.0876279433059" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12892,26 +13582,26 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="46.409293332338,105.760803557441"
+              EndConnector="-74.840706667662,27.0108035574412"
               Start="0,0"
-              End="46.409293332338,98.2608035574412">
+              End="-74.840706667662,19.5108035574412">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,38.923031791137" />
+                    End="0,6.96233709278235" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,38.923031791137"
-                    Point2="0,42.923031791137"
-                    Point3="4,42.923031791137" />
+                    Point1="0,6.96233709278235"
+                    Point2="0,10.9623370927824"
+                    Point3="-4,10.9623370927824" />
                   <mssgle:LineSegment
-                    End="42.409293332338,42.923031791137" />
+                    End="-70.840706667662,10.9623370927824" />
                   <mssgle:CubicBezierSegment
-                    Point1="42.409293332338,42.923031791137"
-                    Point2="46.409293332338,42.923031791137"
-                    Point3="46.409293332338,46.923031791137" />
+                    Point1="-70.840706667662,10.9623370927824"
+                    Point2="-74.840706667662,10.9623370927824"
+                    Point3="-74.840706667662,14.9623370927824" />
                   <mssgle:LineSegment
-                    End="46.409293332338,98.2608035574412" />
+                    End="-74.840706667662,19.5108035574412" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12922,30 +13612,56 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="279.593257147438,68.4361815805038">
+          TopLeft="236.968257147438,49.0285761707097">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-108.736115804064,53.2681225137452"
+              EndConnector="-54.861115804064,0"
               Start="0,0"
-              End="-108.736115804064,45.7681225137452">
+              End="-47.361115804064,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,14.3293943261222" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,14.3293943261222"
-                    Point2="0,18.3293943261222"
-                    Point3="-4,18.3293943261222" />
+                    End="-47.361115804064,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="102,42"
+          Id="Package\Time"
+          TopLeft="485.416666666667,56.6666666666667" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="399.468257147438,47.1861815805038">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="85.9484095192286,30.4804850861629"
+              Start="0,0"
+              End="78.4484095192286,30.4804850861629">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="-104.736115804064,18.3293943261222" />
+                    End="38.9742047596143,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="-104.736115804064,18.3293943261222"
-                    Point2="-108.736115804064,18.3293943261222"
-                    Point3="-108.736115804064,22.3293943261222" />
+                    Point1="38.9742047596143,0"
+                    Point2="42.9742047596143,0"
+                    Point3="42.9742047596143,4" />
                   <mssgle:LineSegment
-                    End="-108.736115804064,45.7681225137452" />
+                    End="42.9742047596143,26.4804850861629" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42.9742047596143,26.4804850861629"
+                    Point2="42.9742047596143,30.4804850861629"
+                    Point3="46.9742047596143,30.4804850861629" />
+                  <mssgle:LineSegment
+                    End="78.4484095192286,30.4804850861629" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -14822,7 +15538,7 @@
     design-time-name="Package\Territory">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="171,42"
           Id="Package\Territory\OLE DB Destination"
@@ -14894,9 +15610,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14930,9 +15644,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14966,9 +15678,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -15002,9 +15712,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -15026,9 +15734,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -15050,9 +15756,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -15074,9 +15778,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -15098,9 +15800,7 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -15122,14 +15822,38 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Territory\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Territory\SalesTerritory">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Product\OLE DB Destination 1">
     <Properties>
@@ -15145,6 +15869,120 @@
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Product\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Time">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Time\OLE DB Source"
+          TopLeft="147.5,13" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Time\Derived Column"
+          TopLeft="209,115" />
+        <EdgeLayout
+          Id="Package\Time.Paths[OLE DB Source Output]"
+          TopLeft="222.5,55">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="63.5,60"
+              Start="0,0"
+              End="63.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="59.5,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="59.5,30"
+                    Point2="63.5,30"
+                    Point3="63.5,34" />
+                  <mssgle:LineSegment
+                    End="63.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Time\OLE DB Destination"
+          TopLeft="247.5,271.5" />
+        <EdgeLayout
+          Id="Package\Time.Paths[Derived Column Output]"
+          TopLeft="286,157">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47,114.5"
+              Start="0,0"
+              End="47,107">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53.25"
+                    Point2="0,57.25"
+                    Point3="4,57.25" />
+                  <mssgle:LineSegment
+                    End="43,57.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="43,57.25"
+                    Point2="47,57.25"
+                    Point3="47,61.25" />
+                  <mssgle:LineSegment
+                    End="47,107" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Time\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Time\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
