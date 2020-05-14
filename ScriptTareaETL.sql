@@ -2,7 +2,7 @@ USE BaseETLTarea2
 
 CREATE TABLE Employee
 (
-	EmployeeKey			INT PRIMARY KEY,
+	EmployeeKey			INT IDENTITY(1,1) PRIMARY KEY, 
 	NationalIDNumber	NVARCHAR(15),
 	FirstName			NVARCHAR(50),
 	MiddleName			NVARCHAR(50),
@@ -14,14 +14,14 @@ CREATE TABLE Employee
 
 CREATE TABLE Territory
 (
-	TerritoryKey	 			INT PRIMARY KEY,
+	TerritoryKey	 			INT IDENTITY(1,1) PRIMARY KEY,
 	ProvinceStateName			NVARCHAR(50),
 	ContryName					NVARCHAR(50)
 )
 
 CREATE TABLE Date
 (
-	DateKey			INT			 PRIMARY KEY,
+	DateKey			INT			 IDENTITY(1,1) PRIMARY KEY,
 	Date			DATE		 NOT NULL,
 	DayOfWeek		NVARCHAR(10) NOT NULL,
 	FiscalYear		INT			 NOT NULL,	
@@ -37,7 +37,7 @@ CREATE TABLE Date
 
 CREATE TABLE Product
 (
-	ProductKey				INT	NOT NULL,
+	ProductKey				INT	IDENTITY(1,1) NOT NULL,
 	Name					NVARCHAR(50),	
 	Size					NVARCHAR(5),
 	Weight					DECIMAL(8,2),
@@ -56,7 +56,7 @@ CREATE TABLE Product
 
 CREATE TABLE FactSalesPerfomance
 (	
-	FactSalesPerfomanceKey 	INT PRIMARY KEY,
+	FactSalesPerfomanceKey 	INT IDENTITY(1,1) PRIMARY KEY,
 	Quantity				INT,
 	Price					INT,
 	Amount					INT,
