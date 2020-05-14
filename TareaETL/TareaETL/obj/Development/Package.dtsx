@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="99"
-  DTS:VersionGUID="{9A42A149-F0EE-4A54-9F56-323587342104}">
+  DTS:VersionBuild="112"
+  DTS:VersionGUID="{6ED040CE-7FEE-4E34-B23C-1EEAB3A76EDB}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1597,6 +1597,322 @@
               </outputs>
             </component>
             <component
+              refId="Package\FactSalesPerformance\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[Territory]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[Territory]) [refTable]
+where [refTable].[TerritoryID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TerritoryKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TerritoryID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProvinceStateName" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ContryName" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\FactSalesPerformance\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  connectionManagerRefId="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\FactSalesPerformance\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\Lookup.Inputs[Lookup Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">TerritoryID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\FactSalesPerformance\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Match Output].Columns[TerritoryKeyCorrecto]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Match Output].Columns[TerritoryKeyCorrecto]"
+                      name="TerritoryKeyCorrecto"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">TerritoryKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\FactSalesPerformance\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\FactSalesPerformance\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\FactSalesPerformance\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\FactSalesPerformance\Lookup 1"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup 1"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[Product]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[Product]) [refTable]
+where [refTable].[ProductID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ProductKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProductID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Name" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Size" dataType="DT_WSTR" length="5" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Weight" dataType="DT_NUMERIC" length="0" precision="8" scale="2" codePage="0"/&gt;&lt;referenceColumn name="ListPrice" dataType="DT_CY" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="StandarCost" dataType="DT_CY" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Color" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Class" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Style" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Line" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Category" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Subcategory" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Model" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[ProductID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\FactSalesPerformance\Lookup 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  connectionManagerRefId="Package.ConnectionManagers[CI0141.BaseETLTarea2]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\FactSalesPerformance\Lookup 1.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\Lookup 1.Inputs[Lookup Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">ProductID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\FactSalesPerformance\Lookup 1.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Match Output].Columns[ProductKeyCorrecto]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Match Output].Columns[ProductKeyCorrecto]"
+                      name="ProductKeyCorrecto"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ProductKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\FactSalesPerformance\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\FactSalesPerformance\Lookup 1.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\FactSalesPerformance\Merge Join"
               componentClassID="Microsoft.MergeJoin"
               contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
@@ -2064,12 +2380,6 @@
                       externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Employee_FKey]"
                       lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[SalesPersonID]" />
                     <inputColumn
-                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[TerritoryID]"
-                      cachedDataType="i4"
-                      cachedName="TerritoryID"
-                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Territory_FKey]"
-                      lineageId="Package\FactSalesPerformance\Merge Join.Outputs[Merge Join Output].Columns[TerritoryID]" />
-                    <inputColumn
                       refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[ProductID]"
                       cachedDataType="i4"
                       cachedName="ProductID"
@@ -2082,6 +2392,12 @@
                       cachedName="DateCompuesta"
                       externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Date_FKey]"
                       lineageId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Output].Columns[DateCompuesta]" />
+                    <inputColumn
+                      refId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[TerritoryKeyCorrecto]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryKeyCorrecto"
+                      externalMetadataColumnId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Territory_FKey]"
+                      lineageId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Match Output].Columns[TerritoryKeyCorrecto]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2911,9 +3227,19 @@
           <paths>
             <path
               refId="Package\FactSalesPerformance.Paths[Derived Column Output]"
-              endId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+              endId="Package\FactSalesPerformance\Lookup.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\FactSalesPerformance\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\FactSalesPerformance.Paths[Lookup Match Output]"
+              endId="Package\FactSalesPerformance\Lookup 1.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\FactSalesPerformance\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\FactSalesPerformance.Paths[Lookup Match Output1]"
+              endId="Package\FactSalesPerformance\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\FactSalesPerformance\Lookup 1.Outputs[Lookup Match Output]" />
             <path
               refId="Package\FactSalesPerformance.Paths[Merge Join Output]"
               endId="Package\FactSalesPerformance\Conditional Split.Inputs[Conditional Split Input]"
@@ -15346,17 +15672,17 @@
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,149.809730449992" />
+                    End="0,169.809730449992" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,149.809730449992"
-                    Point2="0,153.809730449992"
-                    Point3="4,153.809730449992" />
+                    Point1="0,169.809730449992"
+                    Point2="0,173.809730449992"
+                    Point3="4,173.809730449992" />
                   <mssgle:LineSegment
-                    End="148.292858656626,153.809730449992" />
+                    End="148.292858656626,173.809730449992" />
                   <mssgle:CubicBezierSegment
-                    Point1="148.292858656626,153.809730449992"
-                    Point2="152.292858656626,153.809730449992"
-                    Point3="152.292858656626,157.809730449992" />
+                    Point1="148.292858656626,173.809730449992"
+                    Point2="152.292858656626,173.809730449992"
+                    Point3="152.292858656626,177.809730449992" />
                   <mssgle:LineSegment
                     End="152.292858656626,211.879029239084" />
                 </mssgle:SegmentCollection>
@@ -15753,7 +16079,7 @@
         <NodeLayout
           Size="104,42.5"
           Id="Package\Product\Clase"
-          TopLeft="430.260770975056,1014.3351210016" />
+          TopLeft="374.635770975056,1010.5851210016" />
         <NodeLayout
           Size="150.5,42.5"
           Id="Package\Product\Ponemos Clase"
@@ -16200,25 +16526,25 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Product.Paths[No hay clase]"
-          TopLeft="534.260770975056,1034.11398907223">
+          TopLeft="478.635770975056,1032.23898907223">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="174.764172335602,0"
+              EndConnector="230.389172335602,0"
               Start="0,0"
-              End="167.264172335602,0">
+              End="222.889172335602,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="167.264172335602,0" />
+                    End="222.889172335602,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="55.1107385115508,5,57.0426953125,11.609375"
+              BoundingBox="82.9232385115508,5,57.0426953125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -16870,24 +17196,24 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Product.Paths[Union All Output 16]"
-          TopLeft="512.222222222222,1000.33333333333">
+          TopLeft="447.222222222222,979.333333333333">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="22.0385487528342,26.6267876682665"
+              EndConnector="-20.5864512471657,31.2517876682665"
               Start="0,0"
-              End="14.5385487528342,26.6267876682665">
+              End="-20.5864512471657,23.7517876682665">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.6267876682665" />
+                    End="-16.5864512471657,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,22.6267876682665"
-                    Point2="0,26.6267876682665"
-                    Point3="4,26.6267876682665" />
+                    Point1="-16.5864512471657,0"
+                    Point2="-20.5864512471657,0"
+                    Point3="-20.5864512471657,4" />
                   <mssgle:LineSegment
-                    End="14.5385487528342,26.6267876682665" />
+                    End="-20.5864512471657,23.7517876682665" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16902,31 +17228,37 @@
           TopLeft="438.888888888889,1076.11111111111" />
         <EdgeLayout
           Id="Package\Product.Paths[Hay clase]"
-          TopLeft="534.260770975056,1044.2101210016">
+          TopLeft="426.635770975056,1053.0851210016">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-30.3718820861675,31.9009901095112"
+              EndConnector="77.2531179138325,23.0259901095112"
               Start="0,0"
-              End="-30.3718820861675,24.4009901095112">
+              End="77.2531179138325,15.5259901095112">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-26.3718820861675,0" />
+                    End="0,7.51299505475561" />
                   <mssgle:CubicBezierSegment
-                    Point1="-26.3718820861675,0"
-                    Point2="-30.3718820861675,0"
-                    Point3="-30.3718820861675,4" />
+                    Point1="0,7.51299505475561"
+                    Point2="0,11.5129950547556"
+                    Point3="4,11.5129950547556" />
                   <mssgle:LineSegment
-                    End="-30.3718820861675,24.4009901095112" />
+                    End="73.2531179138325,11.5129950547556" />
+                  <mssgle:CubicBezierSegment
+                    Point1="73.2531179138325,11.5129950547556"
+                    Point2="77.2531179138325,11.5129950547556"
+                    Point3="77.2531179138325,15.5129950547556" />
+                  <mssgle:LineSegment
+                    End="77.2531179138325,15.5259901095112" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-51.8632297424175,-17.609375,42.9826953125,11.609375"
+              BoundingBox="17.1352113006662,16.5129950547556,42.9826953125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -17933,109 +18265,201 @@
         <NodeLayout
           Size="155,42"
           Id="Package\FactSalesPerformance\Conditional Split"
-          TopLeft="382,243.5" />
-        <EdgeLayout
-          Id="Package\FactSalesPerformance.Paths[Merge Join Output]"
-          TopLeft="295.5,264.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="86.5,0"
-              Start="0,0"
-              End="79,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="79,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          TopLeft="162.555555555556,348.5" />
         <NodeLayout
           Size="171,42"
           Id="Package\FactSalesPerformance\OLE DB Destination"
-          TopLeft="377.5,333.5" />
+          TopLeft="158.055555555556,438.5" />
         <EdgeLayout
           Id="Package\FactSalesPerformance.Paths[Not employee]"
-          TopLeft="461.25,285.5">
+          TopLeft="241.805555555556,390.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,48"
+              EndConnector="0,47.9999999999999"
               Start="0,0"
-              End="0,40.5">
+              End="0,40.4999999999999">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.5" />
+                    End="0,40.4999999999999" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-30.99134765625,14.4453125,61.9826953125,11.609375"
+              BoundingBox="-30.99134765625,14.4453124999999,61.9826953125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
           Size="154,42"
           Id="Package\FactSalesPerformance\Derived Column"
-          TopLeft="610.5,249.5" />
+          TopLeft="391.055555555556,354.5" />
         <EdgeLayout
           Id="Package\FactSalesPerformance.Paths[with employee]"
-          TopLeft="537,267.5">
+          TopLeft="317.555555555556,372.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="73.5,0"
+              EndConnector="73.5000000000007,0"
               Start="0,0"
-              End="66,0">
+              End="66.0000000000007,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="66,0" />
+                    End="66.0000000000007,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="0.118242187500002,5,65.763515625,11.609375"
+              BoundingBox="0.118242187500371,5,65.763515625,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
           Size="180,42"
           Id="Package\FactSalesPerformance\OLE DB Destination 1"
-          TopLeft="597.777777777778,335" />
+          TopLeft="603.333333333334,538.888888888889" />
         <EdgeLayout
-          Id="Package\FactSalesPerformance.Paths[Derived Column Output]"
-          TopLeft="687.638888888889,291.5">
+          Id="Package\FactSalesPerformance.Paths[Merge Join Output]"
+          TopLeft="230.5,285.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,43.4999999999999"
+              EndConnector="9.5555555555556,63"
               Start="0,0"
-              End="0,35.9999999999999">
+              End="9.5555555555556,55.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.9999999999999" />
+                    End="0,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.5"
+                    Point2="0,31.5"
+                    Point3="4,31.5" />
+                  <mssgle:LineSegment
+                    End="5.5555555555556,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.5555555555556,31.5"
+                    Point2="9.5555555555556,31.5"
+                    Point3="9.5555555555556,35.5" />
+                  <mssgle:LineSegment
+                    End="9.5555555555556,55.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="113,42"
+          Id="Package\FactSalesPerformance\Lookup"
+          TopLeft="428.888888888889,435.555555555556" />
+        <EdgeLayout
+          Id="Package\FactSalesPerformance.Paths[Derived Column Output]"
+          TopLeft="468.055555555556,396.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.3333333333325,39.0555555555555"
+              Start="0,0"
+              End="17.3333333333325,31.5555555555555">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5277777777778" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5277777777778"
+                    Point2="0,19.5277777777778"
+                    Point3="4,19.5277777777778" />
+                  <mssgle:LineSegment
+                    End="13.3333333333325,19.5277777777778" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.3333333333325,19.5277777777778"
+                    Point2="17.3333333333325,19.5277777777778"
+                    Point3="17.3333333333325,23.5277777777778" />
+                  <mssgle:LineSegment
+                    End="17.3333333333325,31.5555555555555" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="122,42"
+          Id="Package\FactSalesPerformance\Lookup 1"
+          TopLeft="657.222222222222,437.222222222222" />
+        <EdgeLayout
+          Id="Package\FactSalesPerformance.Paths[Lookup Match Output]"
+          TopLeft="541.888888888889,457.388888888889">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="115.333333333333,0"
+              Start="0,0"
+              End="107.833333333333,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="107.833333333333,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="5.72527994791663,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FactSalesPerformance.Paths[Lookup Match Output1]"
+          TopLeft="718.222222222222,479.222222222222">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-24.8888888888881,59.6666666666665"
+              Start="0,0"
+              End="-24.8888888888881,52.1666666666665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.8333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.8333333333333"
+                    Point2="0,29.8333333333333"
+                    Point3="-4,29.8333333333333" />
+                  <mssgle:LineSegment
+                    End="-20.8888888888881,29.8333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.8888888888881,29.8333333333333"
+                    Point2="-24.8888888888881,29.8333333333333"
+                    Point3="-24.8888888888881,33.8333333333333" />
+                  <mssgle:LineSegment
+                    End="-24.8888888888881,52.1666666666665" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-60.6358311631941,34.8333333333333,96.3827734375,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -18090,6 +18514,52 @@
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\FactSalesPerformance\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Territory]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\FactSalesPerformance\Lookup 1">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Product]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
