@@ -1,11 +1,12 @@
 USE BaseETLTarea2
 
+
+
 CREATE TABLE Employee
 (
-	EmployeeKey			INT PRIMARY KEY,
+	EmployeeKey			INT IDENTITY (1,1) PRIMARY KEY,
 	NationalIDNumber	NVARCHAR(15),
 	FirstName			NVARCHAR(50),
-	MiddleName			NVARCHAR(50),
 	LastName			NVARCHAR(50),
 	MaritalStatus		NCHAR(1),
 	Salaried			BIT,
@@ -14,14 +15,61 @@ CREATE TABLE Employee
 
 CREATE TABLE Territory
 (
-	TerritoryKey	 			INT PRIMARY KEY,
+	TerritoryKey	 			INT IDENTITY (1,1) PRIMARY KEY,
+	TerritoryID					INT,
 	ProvinceStateName			NVARCHAR(50),
 	ContryName					NVARCHAR(50)
 )
 
 CREATE TABLE Date
 (
-	DateKey			INT			 PRIMARY KEY,
+	DateKey			INT IDENTITY (1,1) PRIMARY KEY,
+	Date			DATE		 NOT NULL,
+	DayOfWeek		NVARCHAR(15),
+	Season			NVARCHAR(15),
+	Month			NVARCHAR(15)	,
+	Quarter			NVARCHAR(2)	,
+	Year			INT	
+)
+
+
+CREATE TABLE Product
+(
+	ProductKey				INT IDENTITY (1,1),
+	ProductID				INT NOT NULL,
+	Name					NVARCHAR(50),	
+	Size					NVARCHAR(5),
+	Weight					DECIMAL(8,2),
+	ListPrice				MONEY,
+	StandarCost				MONEY,
+	Color					NVARCHAR(15),
+	Class					NCHAR(10),
+	Style					NCHAR(10),
+	Line					NCHAR(10),
+	Category				NVARCHAR(50),
+	Subcategory				NVARCHAR(50),
+	Model					NVARCHAR(50),
+	PRIMARY KEY(Productkey)
+)
+
+
+CREATE TABLE FactSalesPerfomance
+(	
+	FactSalesPerfomanceKey 	INT IDENTITY (1,1) PRIMARY KEY,
+	Quantity				INT,
+	Price					INT,
+	Amount					INT,
+ 	Employee_FKey			INT,
+	Territory_FKey			INT,
+	Date_FKey				INT,
+	Product_FKey			INT,
+); 
+
+USE lab3ETL
+
+CREATE TABLE DatesTest
+(	
+	DateKey			INT			 IDENTITY (1,1) PRIMARY KEY,
 	Date			DATE		 NOT NULL,
 	DayOfWeek		NVARCHAR(10) NOT NULL,
 	FiscalYear		INT			 NOT NULL,	
@@ -32,12 +80,102 @@ CREATE TABLE Date
 	Quarter			INT			 NOT NULL,
 	Year			INT			 NOT NULL,
 	WeekdayFlag		BIT			 NOT NULL
-)
+); 
+
+--Datos de prueba 
 
 
-CREATE TABLE Product
+INSERT INTO Employee(NationalIDNumber) 
+VALUES('901090640');  
+
+INSERT INTO [Date] 
+VALUES ('2020-05-05', 'monday', 1, 1, 'spring', 'spring', 'may', 1, 2020, 1);  
+
+INSERT INTO Product(Name, Color) 
+VALUES('Coca', 'rojo');  
+
+INSERT INTO Territory(ProvinceStateName, ContryName) 
+VALUES('Alajuela', 'CR');  
+
+INSERT INTO FactSalesPerfomance(Employee_FKey, Territory_FKey, Date_FKey, Product_FKey) 
+VALUES(1, 1, 1, 1);
+
+
+--Tuplas para poblar date
+INSERT INTO [DatesTest] 
+VALUES ('2020-05-05', 'monday', 2020, 1, 'spring', 'spring', 'may', 1, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('1997-05-05', 'tuesday', 1997, 1, 'summer', 'spring', 'may', 3, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('1999-11-05', 'monday', 1999, 1, 'spring', 'spring', 'may', 1, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('1998-03-11', 'wednesday', 1998, 1, 'spring', 'spring', 'may', 2, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('2010-11-01', 'friday', 2010, 1, 'spring', 'spring', 'may', 2, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('2000-11-11', 'monday', 2000, 1, 'spring', 'spring', 'may', 1, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('1998-01-05', 'monday', 1998, 1, 'spring', 'spring', 'may', 1, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('1995-09-05', 'saturday', 1995, 1, 'spring', 'spring', 'may', 1, 2020, 1); 
+
+INSERT INTO [DatesTest] 
+VALUES ('2000-05-07', 'monday', 2000, 1, 'spring', 'spring', 'may', 1, 2020, 1); 
+
+
+
+--SELECT PRUEBAS
+USE BaseETLTarea2
+
+SELECT *
+FROM Date
+
+SELECT *
+FROM Product
+
+SELECT *
+FROM Territory
+
+SELECT *
+FROM Employee
+
+SELECT *
+FROM FactSalesPerfomance
+
+
+--Eliminar Tuplas
+
+DELETE FROM Employee
+
+DELETE FROM Date
+
+DELETE FROM Territory
+
+DELETE FROM FactSalesPerfomance
+
+DELETE FROM Product
+
+
+USE AdventureWorks2017
+
+SELECT MIN(OrderDate)
+FROM Sales.SalesOrderHeader
+
+
+--Para guardar los productos sin precio 
+USE BaseETLTarea2Helper
+
+CREATE TABLE ProductHelper
 (
-	ProductKey				INT	NOT NULL,
+	ProductKey				INT IDENTITY (1,1),
+	ProductID				INT NOT NULL,
 	Name					NVARCHAR(50),	
 	Size					NVARCHAR(5),
 	Weight					DECIMAL(8,2),
@@ -53,65 +191,18 @@ CREATE TABLE Product
 	PRIMARY KEY(Productkey)
 )
 
+SELECT *
+FROM ProductHelp
 
-CREATE TABLE FactSalesPerfomance
-(	
-	FactSalesPerfomanceKey 	INT PRIMARY KEY,
-	Quantity				INT,
-	Price					INT,
-	Amount					INT,
- 	Employee_FKey			INT,
-	Territory_FKey			INT,
-	Date_FKey				INT,
-	Product_FKey			INT,
- 	CONSTRAINT FK_Fact_Employee			FOREIGN KEY (Employee_FKey)			REFERENCES Employee(EmployeeKey),
-	CONSTRAINT FK_Fact_Territory		FOREIGN KEY (Territory_FKey)		REFERENCES Territory(TerritoryKey),
-	CONSTRAINT FK_Fact_Date				FOREIGN KEY (Date_FKey)				REFERENCES Date(DateKey),
-	CONSTRAINT FK_Fact_Product			FOREIGN KEY (Product_FKey)			REFERENCES Product(ProductKey)
-); 
+USE AdventureWorks2017
+
+SELECT S.OrderDate, S.SalesOrderID
+FROM Sales.SalesOrderHeader S
+
+USE AdventureWorksDW2017
+
+SELECT *
+FROM FactFinance
 
 
---Datos de prueba 
 
-
-INSERT INTO Employee(EmployeeKey, NationalIDNumber)
-VALUES(0, '901090640');
-
-INSERT INTO [Date]
-VALUES (0, '2020-05-05', 'monday', 1, 1, 'spring', 'spring', 'may', 1, 2020, 1);
-
-INSERT INTO Product(ProductKey, Name, Color)
-VALUES(0, 'Coca', 'rojo');
-
-INSERT INTO Territory(TerritoryKey, ProvinceStateName, ContryName)
-VALUES(0, 'Alajuela', 'CR');
-
-INSERT INTO FactSalesPerfomance(FactSalesPerfomanceKey, Employee_FKey, Territory_FKey, Date_FKey, Product_FKey)
-VALUES(0, 0, 0, 0, 0);
-
-
---SELECT PRUEBAS
-use BaseETLTarea2;
-SELECT * FROM Product;
-SELECT * FROM Employee;
-SELECT * FROM dbo.Date;
-SELECT * FROM Territory;
-SELECT * FROM FactSalesPerfomance;
-
--- Borando manualmente
-use BaseETLTarea2;
-delete from dbo.Date;
-delete from dbo.Product;
-delete from dbo.FactSalesPerfomance;
-delete from dbo.Territory;
-delete from dbo.Employee;
-
--- Haciendo consultas a AdventureWorks
-use AdventureWorks2017;
-select * from Sales.SalesOrderHeader;
-
-select * from Production.Product;
-
--- Consultando la fact table
-use BaseETLTarea2;
-select * from FactSalesPerfomance;
