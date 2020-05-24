@@ -11,8 +11,8 @@
   DTS:LocaleID="3082"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="181"
-  DTS:VersionGUID="{3F94482A-495F-48DC-AE75-EA64C1B04A96}">
+  DTS:VersionBuild="182"
+  DTS:VersionGUID="{A8F25E24-05DB-416E-B934-3BDA3B70F3AB}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -7433,13 +7433,13 @@ where [refTable].[ProductID] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[Color]})) ? "Undefiend" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[Color]}</property>
+                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[Color]})) ? "Undefined" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[Color]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(ISNULL(Color)) ? "Undefiend" : Color</property>
+                          name="FriendlyExpression">(ISNULL(Color)) ? "Undefined" : Color</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -7456,13 +7456,13 @@ where [refTable].[ProductID] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[Class]})) ? "Undefiend" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[Class]}</property>
+                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[Class]})) ? "Undefined" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[Class]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(ISNULL(Class)) ? "Undefiend" : Class</property>
+                          name="FriendlyExpression">(ISNULL(Class)) ? "Undefined" : Class</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -7479,13 +7479,13 @@ where [refTable].[ProductID] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[Style]})) ? "Undefiend" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[Style]}</property>
+                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[Style]})) ? "Undefined" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[Style]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(ISNULL(Style)) ? "Undefiend" : Style</property>
+                          name="FriendlyExpression">(ISNULL(Style)) ? "Undefined" : Style</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -7502,13 +7502,13 @@ where [refTable].[ProductID] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[ProductLine]})) ? "Undefiend" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[ProductLine]}</property>
+                          name="Expression">([ISNULL](#{Package\Product\Union All.Outputs[Union All Output 1].Columns[ProductLine]})) ? "Undefined" : #{Package\Product\Union All.Outputs[Union All Output 1].Columns[ProductLine]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(ISNULL(ProductLine)) ? "Undefiend" : ProductLine</property>
+                          name="FriendlyExpression">(ISNULL(ProductLine)) ? "Undefined" : ProductLine</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
